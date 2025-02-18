@@ -1,6 +1,6 @@
 [project]
 name = "zipmanip"
-version = "0.1.0a1"
+version = "0.1.0a2"
 description = "Rewrite zip files, modifying compression type and parameters."
 readme = "README.md"
 license = {text = "MIT"}
@@ -23,7 +23,7 @@ requires-python = ">=3.9"
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/dairiki/gitmanip"
+Homepage = "https://github.com/dairiki/zipmanip"
 
 [project.scripts]
 zipmanip = "zipmanip:main"
