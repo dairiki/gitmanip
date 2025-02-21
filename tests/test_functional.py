@@ -1,6 +1,6 @@
 from itertools import zip_longest
 from pathlib import Path
-from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile
+from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile, ZipInfo
 
 import pytest
 
@@ -12,6 +12,17 @@ def zip_archive(tmp_path_factory: pytest.TempPathFactory) -> Path:
     path = tmp_path_factory.mktemp("sample") / "sample.zip"
     with ZipFile(path, "w", compression=ZIP_DEFLATED) as zf:
         zf.writestr("file.txt", "content\n" * 234)
+
+        
+        info = ZipInfo("dosfile.txt", date_time=(1994, 1, 1, 2, 3, 4))
+        # FIXME: set more fields in a DOS-like manner.
+        info.create_system = 0
+        zf.writestr(info, "dos\r\n" * 432)
+
+        # FIXME: I don't think this is doing what I thought it was.
+        with zf.open("zip64.txt", "w", force_zip64=True) as fp:
+            fp.write(b"data\n" * 123)
+
     return path
 
 
